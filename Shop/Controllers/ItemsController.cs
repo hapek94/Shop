@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,8 +23,10 @@ namespace Shop.Controllers
         // GET: Items
         public  IActionResult Index() 
         {
-           
-            return View();
+            if (User.IsInRole(RoleName.StoreManager))
+                return View("List");
+
+            return View("ReadOnlyList");
         }
 
         // GET: Items/Details/5
@@ -45,7 +48,7 @@ namespace Shop.Controllers
             return View(item);
         }
 
-        // GET: Items/Create
+        [Authorize(Roles =  RoleName.StoreManager)]
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
@@ -55,6 +58,7 @@ namespace Shop.Controllers
         // POST: Items/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = RoleName.StoreManager)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Price,Quantity,PhotoUrl,BarCode,Active,CategoryId")] Item item)
@@ -69,7 +73,7 @@ namespace Shop.Controllers
             return View(item);
         }
 
-        // GET: Items/Edit/5
+        [Authorize(Roles = RoleName.StoreManager)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -91,6 +95,7 @@ namespace Shop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.StoreManager)]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Quantity,PhotoUrl,BarCode,Active,CategoryId")] Item item)
         {
             if (id != item.Id)
@@ -123,6 +128,7 @@ namespace Shop.Controllers
         }
 
         // GET: Items/Delete/5
+        [Authorize(Roles = RoleName.StoreManager)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,6 +148,7 @@ namespace Shop.Controllers
         }
 
         // POST: Items/Delete/5
+        [Authorize(Roles = RoleName.StoreManager)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

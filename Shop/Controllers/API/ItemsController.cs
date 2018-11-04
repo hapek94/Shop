@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
@@ -49,6 +49,7 @@ namespace Shop.Controllers.API
         }
 
         // POST: api/Items 
+        [Authorize(Roles = RoleName.StoreManager)]
         [HttpPost]
         public async Task<IActionResult> CreateItem(ItemDTO itemDTO)
         {
@@ -62,6 +63,7 @@ namespace Shop.Controllers.API
         }
 
         // PUT: api/Items/5
+        [Authorize(Roles = RoleName.StoreManager)]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateItem(int id, ItemDTO itemDTO)
         {
@@ -82,6 +84,7 @@ namespace Shop.Controllers.API
         }
 
         // DELETE: api/ApiWithActions/5
+        [Authorize(Roles = RoleName.StoreManager)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItem(int id)
         {

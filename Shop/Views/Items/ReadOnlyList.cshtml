@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+
+<table id="itemsTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Photo</th>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section scripts
+    {
+    <script>
+        
+        $(document).ready(function () {
+            var table = $('#itemsTable').DataTable(
+                {
+                    ajax: {
+                        url: "/api/items",
+                        dataSrc: ""
+                    },
+                    columns: [
+                        {
+                            data: "photoUrl",
+                            render: function (data) {
+                                return "<img src='" + data + "' width='auto' height='50' >";
+                            }
+                        },
+                        {
+                            data: "name"
+
+                        },
+                        {
+                            data: "quantity"
+                        },
+                        {
+                            data: "price"
+
+                        }
+                    ]
+                });
+        });
+           
+    </script>
+}
