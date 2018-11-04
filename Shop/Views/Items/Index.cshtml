@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table id="itemsTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Photo</th>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section scripts
+    {
+    <script>
+        
+        $(document).ready(function () {
+          var table = $('#itemsTable').DataTable(
+                {
+                    ajax: {
+                        url: "/api/items",
+                        dataSrc:""
+                    },
+                    columns: [
+                        {
+                            data: "photoUrl",
+                            render: function (data) {
+                                return "<img src='" + data + "' width='auto' height='50' >";
+                            }
+                        },
+                        {
+                            data: "name",
+                            render: function (data, type, item) {
+                                return "<a href='/items/edit/" + item.id + "'>" + item.name + "</a>";
+                            }
+                        },
+                        {
+                            data: "quantity"
+                        },
+                        {
+                            data: "id",
+                            render: function (data) {
+                                return "<button class='btn-link js-delete' data-item-id=" + data + ">Delete</button>";
+                            }
+                        }
+                    ]
+                });
+            $("#itemsTable").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/items/" + button.attr("data-item-id"),
+                            method: "DELETE",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                               
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
