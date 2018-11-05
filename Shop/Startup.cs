@@ -42,13 +42,25 @@ namespace Shop
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<IdentityUser, IdentityRole>()
-.AddDefaultUI()
-.AddDefaultTokenProviders()
-.AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddDefaultUI()
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutoMapperProfiles());
+            });
+
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                facebookOptions.Events.OnRemoteFailure = (context) =>
+                {
+                    context.Response.Redirect("/identity/account/login");
+                    context.HandleResponse();
+                    return System.Threading.Tasks.Task.FromResult(0);
+                };
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
