@@ -3,28 +3,32 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+    <h2>Index</h2>
 
-<p>
     <a asp-action="Create">Create New</a>
-</p>
-<table id="itemsTable" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Photo</th>
-            <th>Item Name</th>
-            <th>Quantity</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+
+        <table id="itemsTable" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        
 
 @section scripts
     {
     <script>
         
         $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
           var table = $('#itemsTable').DataTable(
                 {
                     ajax: {
