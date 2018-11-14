@@ -3,7 +3,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #b2c343;
+    background: #9bdde9;
 }
 
 p {
@@ -19,6 +19,21 @@ a, a:hover, a:focus {
     text-decoration: none;
     transition: all 0.3s;
 }
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: white;
+    border: 2px;
+    border-radius: 20px 20px 20px 20px
+}
+    .table .thead-dark th {
+        color: #fff;
+        background-color: #212529;
+        border-color: #32383e;
+        
+    }
+
 .wrapper {
     display: flex;
     align-items: stretch;
