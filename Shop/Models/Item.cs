@@ -21,5 +21,7 @@ namespace Shop.Models
         public Discount Discount { get; set; }
         public int DiscountId { get; set; }
 
+        
+
     }
 }

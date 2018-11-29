@@ -18,6 +18,7 @@ namespace Shop.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<StoreUser> StoreUsers { get; set; }
         public DbSet<UserCategory> UserCategories { get; set; }
+        public DbSet<Purchase> ShoppingCarts { get; set; }
 
     }
 }

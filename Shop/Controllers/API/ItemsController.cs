@@ -27,7 +27,8 @@ namespace Shop.Controllers.API
         [HttpGet]
         public IActionResult GetItems()
         {
-            var itemDtos =  _context.Items.Include(d => d.Discount)
+            var itemDtos = _context.Items.Include(d => d.Discount)
+                .Where(m => m.Quantity > 0)
                 .ToList()
                 .Select(_mapper.Map<Item, ItemDTO>);
 

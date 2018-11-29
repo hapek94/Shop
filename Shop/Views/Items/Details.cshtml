@@ -51,7 +51,37 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Category.Id)
+            
         </dd>
+        <dd>
+            <button id="buy" class="btn btn-primary ">Buy</button>
+        </dd>
+        
     </dl>
 </div>
+@section scripts
+    {
+    <script>
+        
+        var cart = (JSON.parse(localStorage.getItem('cart')) !== null) ? JSON.parse(localStorage.getItem('cart')) : { itemID: []};
+        var item = {id:'@Model.Id',name:'@Model.Name', photoUrl:'@Model.PhotoUrl',price:'@Model.Price', quantity:'@Model.Quantity'};
+        $(document).ready(function () {
+           
 
+             $("#buy").click(function () {
+
+                 
+                 window.localStorage.setItem("cart", JSON.stringify(cart));
+                 
+                 cart.itemID.push(item);
+                
+               
+                
+
+            });
+
+        });
+        
+
+    </script>
+    }
